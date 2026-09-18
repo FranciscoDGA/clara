@@ -1,0 +1,90 @@
+export const TIPO_CASO_LABELS: Record<string, string> = {
+  'divorcio_consensual': 'Divórcio Consensual',
+  'divorcio_litigioso': 'Divórcio Litigioso',
+  'pensao_alimenticia_inicial': 'Pensão Alimentícia (Inicial)',
+  'pensao_revisional': 'Revisão de Pensão',
+  'pensao_executor': 'Execução de Pensão',
+  'alimentos_provisorios': 'Alimentos Provisórios',
+  'alimentos_gravidicos': 'Alimentos Gravídicos',
+  'guarda_unilateral': 'Guarda Unilateral',
+  'guarda_compartilhada': 'Guarda Compartilhada',
+  'guarda_alteracao': 'Alteração de Guarda',
+  'regulamentacao_visitas': 'Regulamentação de Visitas',
+  'alienacao_parental': 'Alienação Parental',
+  'reconhecimento_uniao_estavel': 'Reconhecimento de União Estável',
+  'dissolucao_uniao_estavel': 'Dissolução de União Estável',
+  'partilha_bens': 'Partilha de Bens',
+  'inventario': 'Inventário',
+  'arrolamento': 'Arrolamento',
+  'medida_protetiva_urgente': 'Medida Protetiva (Urgente)',
+  'medida_protetiva_renovacao': 'Renovação de Medida Protetiva',
+  'assedio_moral': 'Assédio Moral no Trabalho',
+  'assedio_sexual': 'Assédio Sexual no Trabalho',
+  'discriminacao_genero': 'Discriminação de Gênero',
+  'licenca_maternidade_negada': 'Licença Maternidade Negada',
+  'estabilidade_gestante': 'Estabilidade da Gestante',
+  'nome_sujo_indevido': 'Nome Sujo Indevido',
+  'cobranca_indevida': 'Cobrança Indevida',
+  'gratuidade_justica': 'Gratuidade de Justiça',
+}
+
+export const TIPO_CASO_CATEGORIAS: Record<string, string> = {
+  'divorcio_consensual': 'família',
+  'divorcio_litigioso': 'família',
+  'pensao_alimenticia_inicial': 'família',
+  'pensao_revisional': 'família',
+  'pensao_executor': 'família',
+  'alimentos_provisorios': 'família',
+  'alimentos_gravidicos': 'família',
+  'guarda_unilateral': 'família',
+  'guarda_compartilhada': 'família',
+  'guarda_alteracao': 'família',
+  'regulamentacao_visitas': 'família',
+  'alienacao_parental': 'família',
+  'reconhecimento_uniao_estavel': 'família',
+  'dissolucao_uniao_estavel': 'família',
+  'partilha_bens': 'família',
+  'inventario': 'família',
+  'arrolamento': 'família',
+  'medida_protetiva_urgente': 'violência',
+  'medida_protetiva_renovacao': 'violência',
+  'assedio_moral': 'trabalho',
+  'assedio_sexual': 'trabalho',
+  'discriminacao_genero': 'trabalho',
+  'licenca_maternidade_negada': 'trabalho',
+  'estabilidade_gestante': 'trabalho',
+  'nome_sujo_indevido': 'consumidor',
+  'cobranca_indevida': 'consumidor',
+  'gratuidade_justica': 'processual',
+}
+
+export const URGENCIA_LABELS: Record<string, { label: string; color: string; icon: string }> = {
+  'critica': { label: 'Crítica', color: 'text-red-600 bg-red-50 border-red-200', icon: '🚨' },
+  'alta': { label: 'Alta', color: 'text-orange-600 bg-orange-50 border-orange-200', icon: '⚠️' },
+  'normal': { label: 'Normal', color: 'text-blue-600 bg-blue-50 border-blue-200', icon: '📋' },
+  'baixa': { label: 'Baixa', color: 'text-gray-600 bg-gray-50 border-gray-200', icon: '📝' },
+}
+
+export const STATUS_CASO_LABELS: Record<string, string> = {
+  'triagem': 'Em Triagem',
+  'documentos_gerados': 'Documentos Prontos',
+  'protocolado': 'Protocolado',
+  'em_andamento': 'Em Andamento',
+  'concluido': 'Concluído',
+  'arquivado': 'Arquivado',
+}
+
+export const PLANO_LABELS: Record<string, { label: string; features: string[] }> = {
+  'gratuito': {
+    label: 'Gratuito',
+    features: ['1 caso ativo', '2 documentos/mês', 'Orientação básica', 'Suporte comunitário'],
+  },
+  'clara_plus': {
+    label: 'Clara+',
+    features: ['Casos ilimitados', 'Todos os documentos', 'Alertas de prazo', 'Suporte prioritário', 'R$ 29,90/mês'],
+  },
+  'clara_pro': {
+    label: 'Clara Pro',
+    features: ['Tudo do Clara+', 'Advogada parceira (1h/mês)', 'Certidões automáticas', 'R$ 79,90/mês'],
+  },
+}

@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+*.log
+.env
+.env.local
+.env*.local
+.vercel
+supabase/.branches
+supabase/.temp
+*.pem
+.DS_Store
+Thumbs.db
