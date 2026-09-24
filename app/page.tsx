@@ -34,7 +34,13 @@ export default function Home() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/triagem"><Button size="lg">Fazer triagem gratuita</Button></Link>
-            <Link href="/cadastro"><Button size="lg" variant="outline"><MessageCircle size={18} /> Falar no WhatsApp</Button></Link>
+            <a
+              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '5511999999999'}?text=${encodeURIComponent('Olá, Clara! Preciso de ajuda com um caso.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" variant="outline"><MessageCircle size={18} /> Falar no WhatsApp</Button>
+            </a>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">Grátis para começar • Sem advogado para começar • Leve à Defensoria para protocolar</p>
         </section>

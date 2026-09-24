@@ -1,0 +1,12 @@
+{
+  "SP": {
+    "enderecos": ["Rua Boa Vista, 103 — Centro, São Paulo/SP (sede DPE-SP)"],
+    "telefones": ["0800 773 4340", "(11) 1234-5678"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "RJ": {
+    "enderecos": ["Av. Marechal Câmara, 271 — Centro, Rio de Janeiro/RJ (sede DPE-RJ)"],
+    "telefones": ["129 (Defensoria RJ)", "(21) 9876-5432"],
+    "horarios": "Seg a Sex, 8h–18h"
+  }
+}

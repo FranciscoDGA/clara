@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -97,6 +98,7 @@ export default function TriagemPage() {
               )}
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button onClick={salvarCaso} disabled={loading}>Salvar caso e gerar documentos</Button>
+                <Link href="/checklist"><Button variant="outline">Ver checklist e endereços</Button></Link>
                 <p className="text-xs text-muted-foreground self-center">Precisa de login — leva 30 segundos.</p>
               </div>
             </CardContent>

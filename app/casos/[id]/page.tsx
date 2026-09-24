@@ -6,6 +6,47 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge, Input, Label, Textarea } from '@/components/ui/inputs'
 import { TIPO_CASO_LABELS } from '@/lib/constants'
 import type { Caso, Documento } from '@/lib/types'
+import { jsPDF } from 'jspdf'
+
+// Gera PDF com texto selecionável (sem html2canvas): cabeçalho Clara,
+// corpo com quebra de linha/página e rodapé com aviso legal.
+function baixarPDF(doc: Documento) {
+  const pdf = new jsPDF({ unit: 'mm', format: 'a4' })
+  const W = 210
+  const margem = 15
+  const larguraTexto = W - margem * 2
+  let y = 20
+
+  pdf.setFont('helvetica', 'bold')
+  pdf.setFontSize(14)
+  pdf.text('Clara — Seus Direitos, Claros', margem, y)
+  y += 7
+  pdf.setFontSize(11)
+  pdf.text(doc.titulo, margem, y)
+  y += 4
+  pdf.setDrawColor(180)
+  pdf.line(margem, y, W - margem, y)
+  y += 6
+
+  pdf.setFont('helvetica', 'normal')
+  pdf.setFontSize(10)
+  const linhas = pdf.splitTextToSize(doc.conteudo_markdown, larguraTexto) as string[]
+  const rodape = (p: number) => {
+    pdf.setFontSize(8)
+    pdf.setTextColor(130)
+    pdf.text(`Documento-base gerado pela Clara. Leve à Defensoria/advogada. Pág. ${p}`, margem, 287)
+    pdf.setTextColor(0)
+    pdf.setFontSize(10)
+  }
+  let pagina = 1
+  for (const linha of linhas) {
+    if (y > 275) { rodape(pagina); pdf.addPage(); pagina += 1; y = 20 }
+    pdf.text(linha, margem, y)
+    y += 5
+  }
+  rodape(pagina)
+  pdf.save(`clara_${doc.tipo}.pdf`)
+}
 
 export default function CasoPage({ params }: { params: { id: string } }) {
   const [caso, setCaso] = useState<Caso | null>(null)
@@ -60,6 +101,7 @@ export default function CasoPage({ params }: { params: { id: string } }) {
     <div className="min-h-screen bg-clara-50 px-4 py-8">
       <div className="mx-auto max-w-4xl space-y-6">
         <Link href="/dashboard"><Button variant="ghost" size="sm">← Voltar</Button></Link>
+        <Link href="/checklist"><Button variant="outline" size="sm">Checklist e endereços da Defensoria</Button></Link>
         <Card>
           <CardHeader>
             <CardTitle>{caso && (TIPO_CASO_LABELS[caso.tipo_caso] ?? caso.tipo_caso)}</CardTitle>
@@ -109,6 +151,7 @@ export default function CasoPage({ params }: { params: { id: string } }) {
                   <CardTitle className="text-base">{d.titulo}</CardTitle>
                   <div className="flex gap-2">
                     <Button size="sm" variant="outline" onClick={() => baixar(d)}>Baixar .md</Button>
+                    <Button size="sm" onClick={() => baixarPDF(d)}>Baixar PDF</Button>
                   </div>
                 </div>
                 {d.variaveis_faltantes.length > 0 && (
