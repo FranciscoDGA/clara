@@ -17,11 +17,19 @@ export default function LoginPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setErro(''); setLoading(true)
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password: senha })
-    setLoading(false)
-    if (error) { setErro(error.message); return }
-    router.push('/dashboard')
+    try {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        throw new Error('Serviço indisponível no momento. Tente novamente em instantes.')
+      }
+      const supabase = createClient()
+      const { error } = await supabase.auth.signInWithPassword({ email, password: senha })
+      if (error) throw error
+      router.push('/dashboard')
+    } catch (err: unknown) {
+      setErro(err instanceof Error ? err.message : 'Erro inesperado')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

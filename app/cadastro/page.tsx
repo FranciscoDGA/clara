@@ -13,19 +13,33 @@ export default function CadastroPage() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
+  const [ok, setOk] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setErro(''); setLoading(true)
-    const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
-      email, password: senha,
-      options: { data: { nome } },
-    })
-    setLoading(false)
-    if (error) { setErro(error.message); return }
-    router.push('/dashboard')
+    setErro(''); setOk(''); setLoading(true)
+    try {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        throw new Error('Serviço indisponível no momento. Tente novamente em instantes.')
+      }
+      const supabase = createClient()
+      const { data, error } = await supabase.auth.signUp({
+        email, password: senha,
+        options: { data: { nome } },
+      })
+      if (error) throw error
+      // Sem sessão = confirmação de e-mail ativada: avisa em vez de travar no dashboard.
+      if (!data.session) {
+        setOk('Conta criada! Verifique seu e-mail para confirmar e depois entre.')
+        return
+      }
+      router.push('/dashboard')
+    } catch (err: unknown) {
+      setErro(err instanceof Error ? err.message : 'Erro inesperado')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -38,6 +52,7 @@ export default function CadastroPage() {
             <div className="space-y-2"><Label htmlFor="email">E-mail</Label><Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="voce@email.com" /></div>
             <div className="space-y-2"><Label htmlFor="senha">Senha (mín. 6)</Label><Input id="senha" type="password" required minLength={6} value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="••••••••" /></div>
             {erro && <p className="text-sm text-red-600">{erro}</p>}
+            {ok && <p className="text-sm text-green-700">{ok}</p>}
             <Button className="w-full" disabled={loading}>{loading ? 'Criando...' : 'Criar conta'}</Button>
             <p className="text-sm text-center text-muted-foreground">Já tem conta? <Link href="/login" className="text-clara-600 font-medium">Entrar</Link></p>
           </form>
