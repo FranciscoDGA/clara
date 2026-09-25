@@ -1,12 +1,33 @@
 'use client'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { Mic, Square } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea, Label, Badge } from '@/components/ui/inputs'
 import { TIPO_CASO_LABELS, URGENCIA_LABELS } from '@/lib/constants'
 import type { TriagemResult } from '@/lib/types'
+
+// Web Speech API (Chrome/Edge): transcrição gratuita no navegador, sem servidor.
+// Tipos mínimos porque o lib.dom do TS não inclui webkitSpeechRecognition.
+interface SpeechRecognitionLike {
+  lang: string
+  interimResults: boolean
+  continuous: boolean
+  onresult: ((ev: { results: ArrayLike<ArrayLike<{ transcript: string; isFinal: boolean }>> }) => void) | null
+  onend: (() => void) | null
+  onerror: ((ev: { error: string }) => void) | null
+  start: () => void
+  stop: () => void
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition?: new () => SpeechRecognitionLike
+    webkitSpeechRecognition?: new () => SpeechRecognitionLike
+  }
+}
 
 export default function TriagemPage() {
   const router = useRouter()
@@ -14,6 +35,50 @@ export default function TriagemPage() {
   const [loading, setLoading] = useState(false)
   const [resultado, setResultado] = useState<TriagemResult | null>(null)
   const [erro, setErro] = useState('')
+  const [gravando, setGravando] = useState(false)
+  const recogRef = useRef<SpeechRecognitionLike | null>(null)
+  const baseRef = useRef('')
+
+  function alternarGravacao() {
+    if (gravando) {
+      recogRef.current?.stop()
+      return
+    }
+    const Ctor = typeof window !== 'undefined'
+      ? (window.SpeechRecognition ?? window.webkitSpeechRecognition)
+      : undefined
+    if (!Ctor) {
+      setErro('Seu navegador não suporta ditado por voz. Use o Chrome ou digite sua história.')
+      return
+    }
+    setErro('')
+    baseRef.current = relato ? relato.replace(/\s+$/, '') + ' ' : ''
+    const recog = new Ctor()
+    recog.lang = 'pt-BR'
+    recog.interimResults = false
+    recog.continuous = true
+    recog.onresult = (ev) => {
+      let final = ''
+      for (let i = 0; i < ev.results.length; i++) {
+        const alt = ev.results[i][0]
+        if (alt?.isFinal) final += alt.transcript + ' '
+      }
+      if (final) setRelato(baseRef.current + final.trim())
+    }
+    recog.onerror = (ev) => {
+      if (ev.error === 'not-allowed') setErro('Permita o microfone no navegador para ditar.')
+      else if (ev.error !== 'aborted') setErro('Falha no ditado. Tente de novo ou digite.')
+      setGravando(false)
+    }
+    recog.onend = () => setGravando(false)
+    recogRef.current = recog
+    try {
+      recog.start()
+      setGravando(true)
+    } catch {
+      setErro('Não foi possível iniciar o microfone.')
+    }
+  }
 
   async function analisar() {
     if (relato.trim().length < 20) { setErro('Conte um pouco mais (mín. 20 caracteres).'); return }
@@ -61,13 +126,21 @@ export default function TriagemPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="relato">Sua história</Label>
-              <Textarea id="relato" value={relato} onChange={(e) => setRelato(e.target.value)} placeholder="O que aconteceu? Quando? Quem está envolvido? Há filhos? Há risco?" rows={6} />
+              <Textarea id="relato" value={relato} onChange={(e) => setRelato(e.target.value)} placeholder="Digite ou dite com o microfone: o que aconteceu? Quando? Há filhos? Há risco?" rows={6} />
             </div>
             {erro && <p className="text-sm text-red-600">{erro}</p>}
-            <div className="flex gap-2">
-              <Button onClick={analisar} disabled={loading}>{loading ? 'Analisando...' : 'Analisar meu caso'}</Button>
-              <Button variant="outline" onClick={() => { setRelato(''); setResultado(null) }}>Limpar</Button>
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={analisar} disabled={loading || gravando}>{loading ? 'Analisando...' : 'Analisar meu caso'}</Button>
+              <Button
+                variant={gravando ? 'destructive' : 'outline'}
+                onClick={alternarGravacao}
+                disabled={loading}
+              >
+                {gravando ? (<><Square size={16} /> Parar</>) : (<><Mic size={16} /> Ditar por voz</>)}
+              </Button>
+              <Button variant="outline" onClick={() => { recogRef.current?.stop(); setRelato(''); setResultado(null) }}>Limpar</Button>
             </div>
+            {gravando && <p className="text-sm text-clara-600 animate-pulse">🎤 Ouvindo... fale normalmente e clique em Parar.</p>}
           </CardContent>
         </Card>
 
