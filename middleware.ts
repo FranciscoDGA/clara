@@ -2,7 +2,13 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request: { headers: request.headers } })
+  // Sem envs do Supabase (ex.: projeto novo sem configuração), não quebra:
+  // só passa adiante e as páginas tratam a ausência.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next({ request: { headers: request.headers } })
+  }
+  try {
+    let response = NextResponse.next({ request: { headers: request.headers } })
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -25,7 +31,11 @@ export async function middleware(request: NextRequest) {
     }
   )
   await supabase.auth.getUser()
-  return response
+    return response
+  } catch {
+    // Falha no refresh de sessão não pode derrubar a página.
+    return NextResponse.next({ request: { headers: request.headers } })
+  }
 }
 
 export const config = {

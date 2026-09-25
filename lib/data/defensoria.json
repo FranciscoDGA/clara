@@ -8,5 +8,79 @@
     "enderecos": ["Av. Marechal Câmara, 271 — Centro, Rio de Janeiro/RJ (sede DPE-RJ)"],
     "telefones": ["129 (Defensoria RJ)", "(21) 9876-5432"],
     "horarios": "Seg a Sex, 8h–18h"
+  },
+  "MG": {
+    "enderecos": [
+      "Rua dos Guajajaras, 1707 — Barro Preto, Belo Horizonte/MG (sede DPE-MG)",
+      "Outras comarcas: consulte as unidades no site defensoria.mg.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.mg.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "RS": {
+    "enderecos": [
+      "Rua Sete de Setembro, 666 — Centro Histórico, Porto Alegre/RS (sede DPE-RS)",
+      "Outras comarcas: consulte as unidades no site defensoria.rs.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.rs.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "PR": {
+    "enderecos": [
+      "Rua Cruz Machado, 58 — Centro, Curitiba/PR (sede DPE-PR)",
+      "Outras comarcas: consulte as unidades no site defensoria.pr.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.pr.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "BA": {
+    "enderecos": [
+      "Av. Ulisses Guimarães, 3386 — Sussuarana, Salvador/BA (sede DPE-BA)",
+      "Outras comarcas: consulte as unidades no site da DPE-BA"
+    ],
+    "telefones": ["Ver canais de atendimento no site da DPE-BA"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "SC": {
+    "enderecos": [
+      "Florianópolis/SC — consulte a sede e as unidades no site defensoria.sc.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.sc.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "PE": {
+    "enderecos": [
+      "Recife/PE — consulte a sede e as unidades no site defensoria.pe.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.pe.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "CE": {
+    "enderecos": [
+      "Fortaleza/CE — consulte a sede e as unidades no site defensoria.ce.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.ce.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "GO": {
+    "enderecos": [
+      "Goiânia/GO — consulte a sede e as unidades no site defensoria.go.def.br"
+    ],
+    "telefones": ["Ver canais de atendimento em defensoria.go.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "DF": {
+    "enderecos": [
+      "Brasília/DF — consulte as unidades no site defensoria.df.def.br"
+    ],
+    "telefones": ["129 (Defensoria DF)", "Ver canais em defensoria.df.def.br"],
+    "horarios": "Seg a Sex, 8h–18h"
+  },
+  "PA": {
+    "enderecos": [
+      "Belém/PA — consulte a sede e as unidades no site da DPE-PA"
+    ],
+    "telefones": ["Ver canais de atendimento no site da DPE-PA"],
+    "horarios": "Seg a Sex, 8h–18h"
   }
 }

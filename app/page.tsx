@@ -75,6 +75,7 @@ export default function Home() {
             <a href="#como-funciona" className="hover:text-clara-700">Como funciona</a>
             <a href="#para-quem" className="hover:text-clara-700">Para quem é</a>
             <a href="#planos" className="hover:text-clara-700">Planos</a>
+            <Link href="/blog" className="hover:text-clara-700">Blog</Link>
             <a href="#faq" className="hover:text-clara-700">Dúvidas</a>
           </nav>
           <nav className="flex items-center gap-2">
@@ -278,6 +279,7 @@ export default function Home() {
               <li><Link href="/triagem" className="hover:text-clara-700">Triagem gratuita</Link></li>
               <li><a href="#planos" className="hover:text-clara-700">Planos</a></li>
               <li><Link href="/checklist" className="hover:text-clara-700">Checklist e Defensoria</Link></li>
+              <li><Link href="/blog" className="hover:text-clara-700">Blog</Link></li>
             </ul>
           </div>
           <div>
@@ -293,11 +295,13 @@ export default function Home() {
             <ul className="space-y-1.5 text-muted-foreground">
               <li><a href="#faq" className="hover:text-clara-700">Dúvidas frequentes</a></li>
               <li><a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="hover:text-clara-700">WhatsApp</a></li>
-              <li><span>Suporte: oi@clara.direito.br</span></li>
+              <li><Link href="/sobre" className="hover:text-clara-700">Sobre</Link></li>
+              <li><Link href="/contato" className="hover:text-clara-700">Contato</Link></li>
+              <li><Link href="/privacidade" className="hover:text-clara-700">Privacidade (LGPD)</Link></li>
             </ul>
           </div>
         </div>
-        <p className="mt-8 text-center text-sm text-muted-foreground">Clara © 2026 • Feito para mulheres • LGPD</p>
+        <p className="mt-8 text-center text-sm text-muted-foreground">Clara © 2026 • Feito para mulheres • <Link href="/privacidade" className="underline hover:text-clara-700">Privacidade (LGPD)</Link> • <Link href="/termos-de-uso" className="underline hover:text-clara-700">Termos de Uso</Link></p>
       </footer>
 
       {/* WhatsApp flutuante */}
