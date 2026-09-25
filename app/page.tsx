@@ -9,8 +9,10 @@ import {
   Check, ChevronDown, Star, HeartHandshake, Gavel, Baby,
 } from 'lucide-react'
 
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '5511999999999'
-const WA_LINK = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Olá, Clara! Preciso de ajuda com um caso.')}`
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ''
+const WA_LINK = WHATSAPP
+  ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Olá, Clara! Preciso de ajuda com um caso.')}`
+  : ''
 
 const PASSOS = [
   { icon: <MessageCircle className="text-clara-600" />, t: '1. Você conta', d: 'Descreva com suas palavras, por texto ou áudio. Sem juridiquês, sem julgamento.' },
@@ -100,9 +102,11 @@ export default function Home() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/triagem"><Button size="lg">Fazer triagem gratuita</Button></Link>
-            <a href={WA_LINK} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline"><MessageCircle size={18} /> Falar no WhatsApp</Button>
-            </a>
+            {WA_LINK && (
+              <a href={WA_LINK} target="_blank" rel="noopener noreferrer">
+                <Button size="lg" variant="outline"><MessageCircle size={18} /> Falar no WhatsApp</Button>
+              </a>
+            )}
           </div>
           <p className="mt-4 text-xs text-muted-foreground">Grátis para começar • Sem advogado para começar • Leve à Defensoria para protocolar</p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
@@ -257,9 +261,11 @@ export default function Home() {
           <p className="mt-3 text-muted-foreground">A triagem é gratuita e leva poucos minutos.</p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/triagem"><Button size="lg">Fazer triagem gratuita</Button></Link>
-            <a href={WA_LINK} target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline"><MessageCircle size={18} /> Falar no WhatsApp</Button>
-            </a>
+            {WA_LINK && (
+              <a href={WA_LINK} target="_blank" rel="noopener noreferrer">
+                <Button size="lg" variant="outline"><MessageCircle size={18} /> Falar no WhatsApp</Button>
+              </a>
+            )}
           </div>
           <p className="mt-6 text-xs text-muted-foreground max-w-3xl mx-auto">
             Aviso legal: a Clara gera documentos-base para levar à Defensoria Pública ou advogada. Não substitui orientação jurídica individual nem atendimento emergencial.
@@ -294,7 +300,7 @@ export default function Home() {
             <p className="font-semibold mb-2">Ajuda</p>
             <ul className="space-y-1.5 text-muted-foreground">
               <li><a href="#faq" className="hover:text-clara-700">Dúvidas frequentes</a></li>
-              <li><a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="hover:text-clara-700">WhatsApp</a></li>
+              {WA_LINK && <li><a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="hover:text-clara-700">WhatsApp</a></li>}
               <li><Link href="/sobre" className="hover:text-clara-700">Sobre</Link></li>
               <li><Link href="/contato" className="hover:text-clara-700">Contato</Link></li>
               <li><Link href="/privacidade" className="hover:text-clara-700">Privacidade (LGPD)</Link></li>
@@ -304,16 +310,18 @@ export default function Home() {
         <p className="mt-8 text-center text-sm text-muted-foreground">Clara © 2026 • Feito para mulheres • <Link href="/privacidade" className="underline hover:text-clara-700">Privacidade (LGPD)</Link> • <Link href="/termos-de-uso" className="underline hover:text-clara-700">Termos de Uso</Link></p>
       </footer>
 
-      {/* WhatsApp flutuante */}
-      <a
-        href={WA_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Falar no WhatsApp"
-        className="fixed bottom-5 right-5 z-20 grid place-items-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition-transform"
-      >
-        <MessageCircle size={26} />
-      </a>
+      {/* WhatsApp flutuante — só aparece quando o número oficial está configurado */}
+      {WA_LINK && (
+        <a
+          href={WA_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Falar no WhatsApp"
+          className="fixed bottom-5 right-5 z-20 grid place-items-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition-transform"
+        >
+          <MessageCircle size={26} />
+        </a>
+      )}
     </div>
   )
 }

@@ -6,7 +6,7 @@ export const metadata = {
   description: 'Fale com a equipe da Clara: suporte, dúvidas e parcerias.',
 }
 
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '5511999999999'
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ''
 
 export default function ContatoPage() {
   return (
@@ -17,13 +17,22 @@ export default function ContatoPage() {
           <CardHeader><CardTitle>Suporte e dúvidas</CardTitle></CardHeader>
           <CardContent className="space-y-3 text-neutral-800 leading-relaxed">
             <p><strong>E-mail:</strong> oi@clara.direito.br</p>
-            <p>
-              <strong>WhatsApp:</strong> +{WHATSAPP} — para dúvidas sobre a plataforma.
-              Em situação de risco, ligue <strong>180</strong> ou <strong>190</strong> (a Clara não é canal de emergência).
-            </p>
-            <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer">
-              <Button>Chamar no WhatsApp</Button>
-            </a>
+            {WHATSAPP ? (
+              <>
+                <p>
+                  <strong>WhatsApp:</strong> +{WHATSAPP} — para dúvidas sobre a plataforma.
+                  Em situação de risco, ligue <strong>180</strong> ou <strong>190</strong> (a Clara não é canal de emergência).
+                </p>
+                <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer">
+                  <Button>Chamar no WhatsApp</Button>
+                </a>
+              </>
+            ) : (
+              <p>
+                <strong>WhatsApp:</strong> canal em implantação — por enquanto, fale pelo e-mail acima.
+                Em situação de risco, ligue <strong>180</strong> ou <strong>190</strong> (a Clara não é canal de emergência).
+              </p>
+            )}
           </CardContent>
         </Card>
         <Card>
