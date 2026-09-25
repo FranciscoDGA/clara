@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/inputs'
+import { CapaPost } from '@/components/blog-capa'
 import { POSTS } from '@/lib/blog'
 import { CATEGORIAS, getAllPosts } from '@/lib/blog/types'
 
@@ -38,7 +39,8 @@ export default function BlogPage({ searchParams }: { searchParams?: { categoria?
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {posts.map((p) => (
             <Link key={p.slug} href={`/blog/${p.slug}`}>
-              <Card className="h-full hover:shadow-md transition-shadow">
+              <Card className="h-full hover:shadow-md transition-shadow overflow-hidden">
+                <CapaPost categoria={p.categoria} className="h-36" iconSize={40} />
                 <CardHeader>
                   <div className="flex items-center gap-2 mb-1">
                     <Badge className="bg-clara-50 text-clara-700 border-clara-200">{p.categoria}</Badge>

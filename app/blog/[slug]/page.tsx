@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/inputs'
+import { CapaPost } from '@/components/blog-capa'
 import { POSTS } from '@/lib/blog'
 import { getPost, getRelacionados } from '@/lib/blog/types'
 
@@ -48,6 +49,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         </div>
         <h1 className="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight text-balance">{post.titulo}</h1>
         <p className="mt-3 text-lg text-muted-foreground">{post.descricao}</p>
+        <CapaPost categoria={post.categoria} className="mt-6 h-56 md:h-64 rounded-xl" iconSize={64} />
 
         <div
           className="post-conteudo mt-8 space-y-4 text-[1.05rem] leading-relaxed text-neutral-800 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:pt-4 [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:space-y-1.5 [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:space-y-1.5 [&_a]:text-clara-700 [&_a]:underline"
